@@ -249,7 +249,7 @@
     setStatus(`Hazır. Kayıt sayısı: ${rows.length} (${STORE === localStorage ? "kalıcı" : "geçici"})`);
   }
 
-  function buildWhatsAppMessage(studentName, dateISO){
+ function buildWhatsAppMessage(studentName, dateISO){
   const db = load();
   const rec = db.students[studentName];
   if(!rec) return "";
@@ -264,7 +264,6 @@
     return s || "-";
   };
 
-  // Aynı kitaptan birden fazla varsa birleştir
   const grouped = {};
   list.forEach(a => {
     grouped[a.book] = grouped[a.book] || [];
@@ -274,37 +273,30 @@
   const lines = [];
 
   // Başlık
-  lines.push("────────────────────");
-  lines.push("*tolgaaydos.com*  |  *Ödev Takip Sistemi*");
-  lines.push("────────────────────");
+  lines.push("*tolgaaydos.com* | *Ödev Takip Sistemi*");
   lines.push("");
 
-  // ✅ 1) Tarih en üste
+  // Bilgiler
   lines.push(`📅 *Tarih:* ${trDate}`);
   lines.push(`🎓 *Öğrenci:* ${studentName}`);
   lines.push("");
 
-  // ✅ 2) Ödevler başlığı daha güçlü
-  lines.push("══════════  📚 *ÖDEVLER*  ══════════");
+  // Ödevler
+  lines.push("📚 *ÖDEVLER*");
 
   let i = 1;
   Object.keys(grouped).forEach(book => {
-    const pages = grouped[book].join(", ");
     lines.push(`${i}) *${book}*`);
-    lines.push(`   ▸ Sayfa: ${pages}`);
+    lines.push(`   ▸ Sayfa: ${grouped[book].join(", ")}`);
     i++;
   });
 
   lines.push("");
   lines.push("_İyi çalışmalar._");
-
-  // ✅ 3) Otomatik imza
   lines.push("*Tolga Hoca*");
-  lines.push("────────────────────");
 
   return lines.join("\n");
 }
-
 
   async function copyText(text){
     try{
@@ -477,5 +469,6 @@ function sendWeeklySummary(){
 </script>
 </body>
 </html>
+
 
 
