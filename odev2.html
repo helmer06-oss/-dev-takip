@@ -110,6 +110,10 @@
       <div class="sep"></div>
 
       <button class="btn green" id="waBtn" type="button"><span>📲</span> WhatsApp ile Gönder</button>
+      
+      <button id="weeklyBtn" class="btn secondary">
+  📅 Haftalık Ödev Özeti (WhatsApp)
+</button>
 
       <div class="tinyRow">
         <button class="btn ghost" id="copyBtn" type="button">Metni Kopyala</button>
@@ -408,7 +412,70 @@
     setStatus("Tüm veriler silindi.");
     render();
   });
+  document.getElementById("weeklyBtn").addEventListener("click", sendWeeklySummary);
+
+function sendWeeklySummary(){
+  const studentName = document.getElementById("studentName").value.trim();
+  if(!studentName){
+    alert("Öğrenci adı giriniz");
+    return;
+  }
+
+  const db = load();
+  const rec = db.students[studentName];
+  if(!rec || rec.assignments.length === 0){
+    alert("Bu öğrenci için kayıt bulunamadı");
+    return;
+  }
+
+  const today = new Date();
+  const weekAgo = new Date();
+  weekAgo.setDate(today.getDate() - 7);
+
+  const list = rec.assignments.filter(a => {
+    const d = new Date(a.date);
+    return d >= weekAgo && d <= today;
+  });
+
+  if(list.length === 0){
+    alert("Son 7 gün içinde ödev yok");
+    return;
+  }
+
+  // Grupla
+  const grouped = {};
+  list.forEach(a => {
+    grouped[a.book] = grouped[a.book] || [];
+    const pages = `${a.pStart || ""}${a.pEnd ? "-" + a.pEnd : ""}`;
+    grouped[a.book].push(pages);
+  });
+
+  const lines = [];
+  lines.push("────────────────────");
+  lines.push("*tolgaaydos.com*  |  *Haftalık Ödev Özeti*");
+  lines.push("────────────────────");
+  lines.push(`🎓 *Öğrenci:* ${studentName}`);
+  lines.push(`📅 *Son 7 Gün*`);
+  lines.push("");
+  lines.push("📚 *ÖDEVLER*");
+
+  let i = 1;
+  Object.keys(grouped).forEach(book => {
+    lines.push(`${i}) *${book}*`);
+    lines.push(`   ▸ Sayfa: ${grouped[book].join(", ")}`);
+    i++;
+  });
+
+  lines.push("");
+  lines.push("_İyi çalışmalar._");
+  lines.push("*Tolga Hoca*");
+  lines.push("────────────────────");
+
+  const msg = encodeURIComponent(lines.join("\n"));
+  window.open(`https://wa.me/?text=${msg}`, "_blank");
+}
 </script>
 </body>
 </html>
+
 
