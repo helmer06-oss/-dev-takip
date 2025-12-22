@@ -443,9 +443,9 @@ function sendWeeklySummary(){
   });
 
   const lines = [];
-  lines.push("────────────────────");
+  lines.push("──────────────────");
   lines.push("*tolgaaydos.com*  |  *Haftalık Ödev Özeti*");
-  lines.push("────────────────────");
+  lines.push("──────────────────");
   lines.push(`🎓 *Öğrenci:* ${studentName}`);
   lines.push(`📅 *Son 7 Gün*`);
   lines.push("");
@@ -461,7 +461,7 @@ function sendWeeklySummary(){
   lines.push("");
   lines.push("_İyi çalışmalar._");
   lines.push("*Tolga Hoca*");
-  lines.push("────────────────────");
+  lines.push("──────────────────");
 
   const msg = encodeURIComponent(lines.join("\n"));
   window.open(`https://wa.me/?text=${msg}`, "_blank");
@@ -469,6 +469,7 @@ function sendWeeklySummary(){
 </script>
 </body>
 </html>
+
 
 
 
