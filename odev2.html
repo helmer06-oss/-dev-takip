@@ -96,6 +96,12 @@
       <input id="date" type="date" />
 
       <label>Kitap Seçimi:</label>
+      <div class="row" style="margin-top:10px;">
+  <button class="btn ghost" id="addBookBtn" type="button">➕ Kitap Ekle</button>
+  <button class="btn ghost" id="renameBookBtn" type="button">✏️ Kitap Adı Düzenle</button>
+  <button class="btn ghost" id="deleteBookBtn" type="button">🗑️ Kitabı Sil</button>
+</div>
+
       <select id="book">
         <option value="">Kitap Seçiniz...</option>
         <option>TYT Matematik Soru Bankası</option>
@@ -692,10 +698,144 @@ function escapeHtml(str){
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
 }
+// === Kitap listesi (kalıcı) ===
+document.addEventListener("DOMContentLoaded", () => {
+  ensureBookList();
+  refreshBookSelect();
+
+  const addB = document.getElementById("addBookBtn");
+  if (addB) addB.addEventListener("click", addBook);
+
+  const renB = document.getElementById("renameBookBtn");
+  if (renB) renB.addEventListener("click", renameBook);
+
+  const delB = document.getElementById("deleteBookBtn");
+  if (delB) delB.addEventListener("click", deleteBook);
+});
+
+// İlk kez açılışta kitap listesi yoksa varsayılanı kur
+function ensureBookList(){
+  const db = load();
+  db.books = db.books || [];
+  if(db.books.length === 0){
+    // İstersen burayı tamamen boş da bırakabiliriz
+    db.books = [
+      "TYT Matematik Soru Bankası",
+      "AYT Fizik Konu Anlatımı",
+      "Geometri Yaprak Test",
+      "Paragraf Soru Bankası",
+      "Kimya Denemeleri"
+    ];
+    save(db);
+  }
+}
+
+// Mevcut kitap select’ini db.books ile doldur
+function refreshBookSelect(){
+  const sel = document.getElementById("book");
+  if(!sel) return;
+
+  const db = load();
+  db.books = db.books || [];
+
+  const current = sel.value;
+
+  // İlk seçenek aynı kalsın
+  sel.innerHTML = `<option value="">Kitap Seçiniz...</option>` +
+    db.books
+      .slice()
+      .sort((a,b)=>a.localeCompare(b, "tr"))
+      .map(b => `<option value="${escapeHtml(b)}">${escapeHtml(b)}</option>`)
+      .join("");
+
+  if(db.books.includes(current)) sel.value = current;
+}
+
+function addBook(){
+  const sel = document.getElementById("book");
+  const current = (sel?.value || "").trim();
+
+  const name = prompt("Eklenecek kitap adı:", current);
+  if(!name) return;
+  const bookName = name.trim();
+  if(!bookName) return;
+
+  const db = load();
+  db.books = db.books || [];
+
+  if(db.books.includes(bookName)){
+    alert("Bu kitap zaten listede var.");
+    return;
+  }
+
+  db.books.push(bookName);
+  save(db);
+
+  refreshBookSelect();
+  if(sel) sel.value = bookName;
+
+  alert("Kitap listeye eklendi.");
+}
+
+function deleteBook(){
+  const sel = document.getElementById("book");
+  const bookName = (sel?.value || "").trim();
+  if(!bookName) return alert("Önce bir kitap seçiniz.");
+
+  if(!confirm(`"${bookName}" kitabını listeden silmek istiyor musunuz?`)) return;
+
+  const db = load();
+  db.books = (db.books || []).filter(b => b !== bookName);
+  save(db);
+
+  refreshBookSelect();
+  alert("Kitap silindi.");
+}
+
+function renameBook(){
+  const sel = document.getElementById("book");
+  const oldName = (sel?.value || "").trim();
+  if(!oldName) return alert("Önce bir kitap seçiniz.");
+
+  const newName = prompt("Yeni kitap adı:", oldName);
+  if(!newName) return;
+  const nn = newName.trim();
+  if(!nn) return;
+
+  const db = load();
+  db.books = db.books || [];
+
+  if(oldName === nn) return;
+
+  if(db.books.includes(nn)){
+    alert("Bu isim zaten var.");
+    return;
+  }
+
+  // kitap listesini güncelle
+  db.books = db.books.map(b => (b === oldName ? nn : b));
+
+  // varsa geçmiş ödevlerdeki book alanını da güncelle (çok faydalı!)
+  Object.keys(db.students || {}).forEach(s => {
+    const rec = db.students[s];
+    if(!rec?.assignments) return;
+    rec.assignments.forEach(a => {
+      if(a.book === oldName) a.book = nn;
+    });
+  });
+
+  save(db);
+
+  refreshBookSelect();
+  if(sel) sel.value = nn;
+
+  alert("Kitap adı güncellendi.");
+}
 
 </script>
 </body>
 </html>
+
 
 
 
