@@ -3,305 +3,670 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tolgaaydos.com – Ödev Takip Sistemi</title>
+  <title>tolgaaydos.com - Ödev Takip Sistemi</title>
+
+  <!-- Favicon (aynı klasörde logo.png varsa otomatik) -->
+  <link rel="icon" type="image/png" href="logo.png" />
+
   <style>
     :root{
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-      --bg:#f1f3f6; --card:#fff; --text:#1f2937; --muted:#6b7280;
-      --line:#e5e7eb; --blue:#0b79f7; --green:#22c55e; --danger:#ef4444;
+      --bg:#f4f6f9;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+      --blue:#1677ff;
+      --green:#22c55e;
+      --orange:#f59e0b;
+      --shadow: 0 14px 34px rgba(2,6,23,.10);
+      --radius: 18px;
+      --radius2: 14px;
+      --ring: 0 0 0 3px rgba(22,119,255,.15);
+      font-synthesis-weight:none;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);}
-    .wrap{max-width:600px;margin:0 auto;padding:22px 14px 34px;}
-    .card{background:var(--card);border-radius:22px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:18px;overflow:hidden;}
-    .brandBand{
-      display:flex;align-items:center;justify-content:center;gap:16px;
-      padding:14px;margin:-18px -18px 16px;background:linear-gradient(180deg,#fff,#f7f8fb);
-      border-bottom:1px solid var(--line);
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     }
-    .brandBand img{width:56px;height:56px;object-fit:contain;border-radius:12px;flex:0 0 auto;}
-    .brandText{display:flex;flex-direction:column;line-height:1.1;text-align:left}
-    .brandTop{font-weight:900;font-size:24px;letter-spacing:.4px}
-    .brandBottom{font-weight:800;font-size:20px;letter-spacing:.25px;color:#374151}
-    @media(max-width:420px){.brandBand img{width:48px;height:48px}.brandTop{font-size:21px}.brandBottom{font-size:18px}}
+    .wrap{
+      max-width:780px;
+      margin:0 auto;
+      padding:20px 14px 44px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg,#ffffff,#fbfbfd);
+    }
+    .brand img{
+      width:56px;height:56px; object-fit:contain;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      flex:0 0 auto;
+    }
+    .brand .t1{
+      font-weight:900;
+      letter-spacing:.2px;
+      font-size:24px;
+      line-height:1.05;
+    }
+    .brand .t2{
+      margin-top:2px;
+      font-weight:800;
+      font-size:20px;
+      color:#111827;
+      line-height:1.1;
+    }
+    .content{ padding:18px 16px 20px; }
 
-    label{display:block;font-weight:850;color:#374151;margin:14px 0 8px;font-size:16px;}
-    input,select{width:100%;padding:14px;border-radius:12px;border:2px solid var(--line);background:#fff;font-size:16px;outline:none;display:block;}
-    input:focus,select:focus{border-color:#bcd7ff; box-shadow:0 0 0 4px rgba(11,121,247,.10);}
-    .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;}
-    @media(max-width:420px){.row{grid-template-columns:1fr}}
-    .btn{width:100%;padding:14px 16px;border:none;border-radius:12px;font-size:18px;font-weight:900;color:#fff;cursor:pointer;}
-    .btn.blue{background:var(--blue);margin-top:16px;}
-    .btn.green{background:var(--green);display:flex;align-items:center;justify-content:center;gap:10px;}
-    .sep{height:2px;background:var(--line);margin:16px 0;}
-    .tinyRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
-    @media(max-width:420px){.tinyRow{grid-template-columns:1fr}}
-    .ghost{background:#eef1f7;color:#111;border:1px solid #d6d8e1;}
-    details{margin-top:14px}
-    summary{cursor:pointer;color:var(--muted);font-weight:850}
-    table{width:100%;border-collapse:collapse;margin-top:10px;}
-    th,td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:top;word-break:break-word;}
-    th{color:var(--muted);font-weight:900;font-size:12px}
-    .tag{display:inline-block;padding:4px 10px;border-radius:999px;background:#eef2ff;color:#1d4ed8;font-weight:900;font-size:12px}
-    .danger{border:none;background:var(--danger);color:#fff;border-radius:10px;padding:8px 10px;font-weight:900;cursor:pointer;white-space:nowrap;}
-    .status{margin-top:10px;font-size:13px;color:var(--muted);text-align:center}
+    label{
+      display:block;
+      font-size:13px;
+      font-weight:800;
+      color:#111827;
+      margin:12px 0 6px;
+    }
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      font-size:15px;
+      outline:none;
+      background:#fff;
+    }
+    input:focus, select:focus, textarea:focus{ box-shadow:var(--ring); border-color:#bcd7ff; }
+
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width:640px){
+      .row{ grid-template-columns:1fr; }
+    }
+
+    .row3{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width:860px){
+      .row3{ grid-template-columns:1fr; }
+    }
+
+    .btnRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:12px 14px;
+      font-weight:900;
+      font-size:15px;
+      cursor:pointer;
+      width:100%;
+      user-select:none;
+    }
+    .btn.blue{ background:var(--blue); color:#fff; }
+    .btn.green{ background:var(--green); color:#fff; }
+    .btn.ghost{
+      background:#f1f5f9;
+      color:#111827;
+      border:1px solid var(--line);
+    }
+    .btn.secondary{
+      background:#eef2ff;
+      color:#111827;
+      border:1px solid #dbeafe;
+    }
+    .btn.danger{
+      background:#fee2e2;
+      color:#991b1b;
+      border:1px solid #fecaca;
+    }
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    .sep{
+      height:1px; background:var(--line); margin:14px 0;
+    }
+    .muted{ color:var(--muted); }
+    .small{ font-size:12px; }
+    .status{
+      margin-top:10px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    details{
+      margin-top:14px;
+      border-top:1px dashed var(--line);
+      padding-top:12px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:900;
+      color:#111827;
+      margin-bottom:10px;
+    }
+
+    table{ width:100%; border-collapse:collapse; }
+    th,td{
+      padding:10px 8px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:13px;
+      vertical-align:top;
+    }
+    th{ color:var(--muted); font-weight:800; font-size:12px; }
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      padding:3px 8px;
+      border-radius:999px;
+      background:#f1f5f9;
+      border:1px solid var(--line);
+      color:#111827;
+      margin-left:6px;
+      font-weight:800;
+    }
+    .right{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+    .tinyRow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width:640px){
+      .tinyRow{ grid-template-columns:1fr; }
+    }
   </style>
 </head>
+
 <body>
-  
-  <!--
-  Proje: tolgaaydos.com - Ödev Takip Sistemi
-  Sürüm: v1.2
-  Güncelleme: WhatsApp mesaj başlıkları sadeleştirildi
-  Tarih: 25.12.2025
--->
-  
   <div class="wrap">
     <div class="card">
 
-      <div class="brandBand">
-       
-        <img id="brandLogo" src="logo.png" alt="Tolga Aydos Logo">
-        <div class="brandText">
-          <div class="brandTop">tolgaaydos.com</div>
-          <div class="brandBottom">Ödev Takip Sistemi</div>
-        </div>
-      </div>
-<label>Öğrenci Listesi:</label>
-<div class="row">
-  <select id="studentSelect">
-    <option value="">Öğrenci seçiniz...</option>
-  </select>
-  <button class="btn ghost" id="addStudentBtn" type="button">➕ Listeye Ekle</button>
-</div>
-
-<div class="row" style="margin-top:10px;">
-  <button class="btn ghost" id="renameStudentBtn" type="button">✏️ Adı Düzenle</button>
-  <button class="btn ghost" id="deleteStudentBtn" type="button">🗑️ Listeden Sil</button>
-</div>
-      <label>Öğrenci Adı Soyadı:</label>
-      <input id="student" list="studentList" placeholder="Örn: Ahmet Yılmaz" autocomplete="off" />
-      <datalist id="studentList"></datalist>
-
-      <label>Tarih:</label>
-      <label>Tarih Aralığı:</label>
-<div class="row">
-  <input type="date" id="startDate">
-  <input type="date" id="endDate">
-</div>
-<div class="muted small" style="margin-top:6px;">
-  İpucu: Tek gün istiyorsan başlangıç ve bitişi aynı seç.
-</div>
-      <input id="date" type="date" />
-
-      <label>Kitap Seçimi:</label>
-      <div class="row" style="margin-top:10px;">
-  <button class="btn ghost" id="addBookBtn" type="button">➕ Kitap Ekle</button>
-  <button class="btn ghost" id="renameBookBtn" type="button">✏️ Kitap Adı Düzenle</button>
-  <button class="btn ghost" id="deleteBookBtn" type="button">🗑️ Kitabı Sil</button>
-</div>
-
-      <select id="book">
-        <option value="">Kitap Seçiniz...</option>
-        <option>TYT Matematik Soru Bankası</option>
-        <option>AYT Fizik Konu Anlatımı</option>
-        <option>Geometri Yaprak Test</option>
-        <option>Paragraf Soru Bankası</option>
-        <option>Kimya Denemeleri</option>
-      </select>
-
-      <div class="row">
+      <div class="brand">
+        <img src="logo.png" alt="Tolga Aydos Logo" onerror="this.style.display='none'">
         <div>
-          <label>Başlangıç Sayfası:</label>
-          <input id="pStart" type="number" min="1" placeholder="10" />
-        </div>
-        <div>
-          <label>Bitiş Sayfası:</label>
-          <input id="pEnd" type="number" min="1" placeholder="15" />
+          <div class="t1">tolgaaydos.com</div>
+          <div class="t2">Ödev Takip Sistemi</div>
         </div>
       </div>
 
-      <button class="btn blue" id="addBtn" type="button">Listeye Ekle</button>
+      <div class="content">
 
-      <div class="sep"></div>
-
-      <button class="btn green" id="waBtn" type="button"><span>📲</span> WhatsApp ile Gönder</button>
-      
-      <button class="btn ghost" id="weeklyBtn" type="button">
-  📅 Haftalık Ödev Özeti (WhatsApp)
-</button>
-
-      <div class="tinyRow">
-        <button class="btn ghost" id="copyBtn" type="button">Metni Kopyala</button>
-        <button class="btn ghost" id="todayBtn" type="button">Bugün</button>
-      </div>
-
-      <div class="status" id="status">Hazır.</div>
-
-      <details>
-        <summary>Kayıtları Göster / Yönet</summary>
-        <table>
-          <thead>
-            <tr>
-              <th>Öğrenci</th><th>Tarih</th><th>Kitap</th><th>Sayfa</th><th></th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-        <div style="margin-top:12px;">
-          <button class="danger" id="wipeBtn" type="button">Tüm Veriyi Sil</button>
+        <!-- Öğrenci seçimi + yönetimi -->
+        <label>Öğrenci Listesi:</label>
+        <div class="row">
+          <select id="studentSelect">
+            <option value="">Öğrenci seçiniz...</option>
+          </select>
+          <button class="btn ghost" id="addStudentBtn" type="button">➕ Öğrenciyi Listeye Ekle</button>
         </div>
-      </details>
+        <div class="row" style="margin-top:10px;">
+          <button class="btn ghost" id="renameStudentBtn" type="button">✏️ Öğrenci Adı Düzenle</button>
+          <button class="btn danger" id="deleteStudentBtn" type="button">🗑️ Öğrenciyi Sil</button>
+        </div>
 
+        <label>Öğrenci Adı Soyadı:</label>
+        <input id="student" type="text" placeholder="Örn: Ahmet Yılmaz" />
+
+        <!-- Tarih aralığı -->
+        <label>Tarih Aralığı:</label>
+        <div class="row">
+          <input id="startDate" type="date" />
+          <input id="endDate" type="date" />
+        </div>
+        <div class="muted small" style="margin-top:6px;">
+          İpucu: Tek gün için başlangıç ve bitişi aynı seç. “Haftalık Özet” seçili aralığı kullanır; aralık seçmezsen son 7 günü gönderir.
+        </div>
+
+        <!-- Tek gün göstergesi (WhatsApp günlük için) -->
+        <label>Günlük Gönderim Tarihi (tek gün): <span class="tag" id="singleTag">-</span></label>
+        <input id="date" type="date" />
+
+        <!-- Kitap seçimi + yönetimi -->
+        <label>Kitap Seçimi:</label>
+        <select id="book">
+          <option value="">Kitap Seçiniz...</option>
+        </select>
+
+        <div class="row" style="margin-top:10px;">
+          <button class="btn ghost" id="addBookBtn" type="button">➕ Kitap Ekle</button>
+          <button class="btn ghost" id="renameBookBtn" type="button">✏️ Kitap Adı Düzenle</button>
+        </div>
+        <div class="row" style="margin-top:10px;">
+          <button class="btn danger" id="deleteBookBtn" type="button">🗑️ Kitabı Sil</button>
+          <button class="btn secondary" id="resetBooksBtn" type="button">↺ Varsayılan Kitapları Yükle</button>
+        </div>
+
+        <label>Sayfa Aralığı:</label>
+        <div class="row">
+          <input id="pStart" type="number" min="0" placeholder="Başlangıç (örn. 10)" />
+          <input id="pEnd" type="number" min="0" placeholder="Bitiş (örn. 15)" />
+        </div>
+
+        <div class="btnRow">
+          <button class="btn blue" id="addBtn" type="button">Listeye Ekle (Seçili Aralığa)</button>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="btnRow">
+          <button class="btn green" id="waBtn" type="button">📲 WhatsApp ile Gönder (Seçili Gün)</button>
+          <button class="btn ghost" id="weeklyBtn" type="button">📅 Haftalık Ödev Özeti (WhatsApp)</button>
+        </div>
+
+        <div class="tinyRow">
+          <button class="btn ghost" id="copyBtn" type="button">Metni Kopyala</button>
+          <button class="btn ghost" id="todayBtn" type="button">Bugün</button>
+        </div>
+
+        <div class="status" id="status">Hazır.</div>
+
+        <details>
+          <summary>▶ Kayıtları Göster / Yönet</summary>
+
+          <div class="muted small" style="margin-bottom:10px;">
+            Kayıtlar cihazınızda saklanır. Aynı cihaz + aynı site adresinde kaldığı sürece silinmez.
+          </div>
+
+          <div class="row">
+            <button class="btn ghost" id="exportBtn" type="button">⬇️ Yedek (JSON) İndir</button>
+            <button class="btn ghost" id="importBtn" type="button">⬆️ Yedek (JSON) Yükle</button>
+          </div>
+          <input id="importFile" type="file" accept="application/json" style="display:none;" />
+
+          <div class="row" style="margin-top:10px;">
+            <button class="btn danger" id="wipeBtn" type="button">🧨 Tüm Kayıtları Sıfırla</button>
+            <button class="btn secondary" id="rebuildBtn" type="button">🛠️ Listeyi Yenile</button>
+          </div>
+
+          <div class="sep"></div>
+          <div id="tableWrap"></div>
+        </details>
+
+      </div>
     </div>
   </div>
 
 <script>
-  const KEY = "odev_panel_students_mobilefix_v1";
-  const $ = (id) => document.getElementById(id);
+/* =========================
+   Kalıcı Veri (localStorage)
+========================= */
+const STORAGE_KEY = "TA_ODEV_DB_V2";
 
-  function setStatus(msg){ $("status").textContent = msg; }
+const DEFAULT_BOOKS = [
+  "TYT Matematik Soru Bankası",
+  "AYT Fizik Konu Anlatımı",
+  "Geometri Yaprak Test",
+  "Paragraf Soru Bankası",
+  "Kimya Denemeleri"
+];
 
-  // logo fallback
-  (function fixLogo(){
-    const img = $("brandLogo");
-    img.addEventListener("error", () => {
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80">
-        <rect width="100%" height="100%" rx="14" fill="#eef2ff"/>
-        <text x="50%" y="54%" text-anchor="middle" font-size="34" font-family="Arial" fill="#1d4ed8" font-weight="700">TA</text>
-      </svg>`;
-      img.src = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
-    });
-  })();
-
-  function todayISO(){
-    const d = new Date();
-    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-    return d.toISOString().slice(0,10);
-  }
-
-  // ✅ iOS/Preview sorunlarına karşı: localStorage çalışmazsa sessionStorage’a düş
-  function storageOK(){
-    try{
-      localStorage.setItem("__t","1");
-      localStorage.removeItem("__t");
-      return true;
-    }catch{
-      return false;
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const db = JSON.parse(raw);
+      db.students = db.students || {};
+      db.books = Array.isArray(db.books) ? db.books : [];
+      if(db.books.length === 0) db.books = DEFAULT_BOOKS.slice();
+      return db;
     }
+  }catch(e){}
+  const init = { students:{}, books: DEFAULT_BOOKS.slice(), createdAt: new Date().toISOString() };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(init));
+  return init;
+}
+function save(db){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+}
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+/* =========================
+   Yardımcılar
+========================= */
+const $ = (id)=>document.getElementById(id);
+
+function setStatus(msg){
+  $("status").textContent = msg;
+}
+
+function trDate(iso){
+  if(!iso) return "-";
+  const p = iso.split("-");
+  if(p.length!==3) return iso;
+  return `${p[2]}.${p[1]}.${p[0]}`;
+}
+
+function normalizeName(s){
+  return (s||"").trim().replace(/\s+/g," ");
+}
+
+function ensureStudent(db, name){
+  db.students = db.students || {};
+  if(!db.students[name]){
+    db.students[name] = { assignments: [] };
   }
-  const STORE = storageOK() ? localStorage : sessionStorage;
+}
 
-  function load(){
-    try{ return JSON.parse(STORE.getItem(KEY) || '{"students":{}}'); }
-    catch{ return { students:{} }; }
+function pageText(pStart, pEnd){
+  const s = String(pStart||"").trim();
+  const e = String(pEnd||"").trim();
+  if(!s && !e) return "-";
+  if(s && e) return `${s}-${e}`;
+  return s || e || "-";
+}
+
+/* =========================
+   Tarih Aralığı
+========================= */
+function getSelectedDates(){
+  const s = $("startDate")?.value;
+  const e = $("endDate")?.value;
+
+  if(!s || !e){
+    const single = $("date")?.value;
+    return single ? [single] : [];
   }
-  function save(db){ STORE.setItem(KEY, JSON.stringify(db)); }
-
-  function normName(s){ return (s||"").trim().replace(/\s+/g," "); }
-  function esc(s){
-    return String(s ?? "")
-      .replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  if(s > e){
+    alert("Başlangıç tarihi, bitiş tarihinden büyük olamaz.");
+    return [];
   }
-
-  function ensureStudent(db, studentName){
-    if(!db.students[studentName]){
-      db.students[studentName] = { createdAt: Date.now(), assignments: [] };
-    }
+  const dates = [];
+  let cur = new Date(s);
+  const end = new Date(e);
+  cur.setHours(12,0,0,0);
+  end.setHours(12,0,0,0);
+  while(cur <= end){
+    dates.push(cur.toISOString().slice(0,10));
+    cur.setDate(cur.getDate()+1);
   }
+  return dates;
+}
 
-  function validate(student, date, book, pStart, pEnd){
-    if(!student) return "Öğrenci adı soyadı boş olamaz.";
-    if(!date) return "Tarih seçmelisin.";
-    if(!book) return "Lütfen bir kitap seçiniz.";
-    if(pStart && pEnd && Number(pEnd) < Number(pStart)) return "Bitiş sayfası, başlangıçtan küçük olamaz.";
-    return "";
-  }
+function updateSingleDateTag(){
+  const d = $("date").value;
+  $("singleTag").textContent = d ? trDate(d) : "-";
+}
 
-  function refreshStudentDatalist(db){
-    const dl = $("studentList");
-    const names = Object.keys(db.students).sort((a,b)=>a.localeCompare(b,"tr"));
-    dl.innerHTML = "";
-    names.forEach(n=>{
-      const o=document.createElement("option");
-      o.value=n;
-      dl.appendChild(o);
-    });
-  }
-
-  function flatRows(db){
-    const rows = [];
-    for(const [student, rec] of Object.entries(db.students)){
-      for(let i=0;i<rec.assignments.length;i++){
-        rows.push({ student, idx:i, ...rec.assignments[i] });
-      }
-    }
-    rows.sort((x,y)=>(y.createdAt||0)-(x.createdAt||0));
-    return rows;
-  }
-
-  function render(){
-    const db = load();
-    refreshStudentDatalist(db);
-
-    const rows = flatRows(db);
-    const tb = $("tbody");
-    tb.innerHTML = "";
-
-    rows.forEach(r=>{
-      const pages = `${r.pStart || ""}${r.pEnd ? "-" + r.pEnd : ""}`.trim() || "-";
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${esc(r.student)}</td>
-        <td><span class="tag">${esc(r.date || "-")}</span></td>
-        <td>${esc(r.book)}</td>
-        <td>${esc(pages)}</td>
-        <td><button class="danger" type="button" data-student="${esc(r.student)}" data-idx="${r.idx}">Sil</button></td>
-      `;
-      tb.appendChild(tr);
-    });
-
-    setStatus(`Hazır. Kayıt sayısı: ${rows.length} (${STORE === localStorage ? "kalıcı" : "geçici"})`);
-  }
-
- function buildWhatsAppMessage(studentName, dateISO){
+/* =========================
+   Öğrenci Listesi UI
+========================= */
+function refreshStudentSelect(){
   const db = load();
-  const rec = db.students[studentName];
+  const sel = $("studentSelect");
+  if(!sel) return;
+
+  const names = Object.keys(db.students||{}).sort((a,b)=>a.localeCompare(b,"tr"));
+  const current = sel.value;
+
+  sel.innerHTML = `<option value="">Öğrenci seçiniz...</option>` +
+    names.map(n=>`<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join("");
+
+  if(names.includes(current)) sel.value = current;
+}
+
+function addStudentToList(){
+  const name = normalizeName($("student").value);
+  if(!name) return alert("Öğrenci adı soyadı yazınız.");
+
+  const db = load();
+  ensureStudent(db, name);
+  save(db);
+
+  refreshStudentSelect();
+  $("studentSelect").value = name;
+  setStatus(`Öğrenci eklendi: ${name}`);
+}
+
+function renameStudentInList(){
+  const sel = $("studentSelect");
+  const oldName = normalizeName(sel.value);
+  if(!oldName) return alert("Önce listeden öğrenci seçiniz.");
+
+  const nn = normalizeName(prompt("Yeni öğrenci adı:", oldName));
+  if(!nn) return;
+  if(nn === oldName) return;
+
+  const db = load();
+  if(db.students[nn]) return alert("Bu isim zaten var.");
+
+  db.students[nn] = db.students[oldName];
+  delete db.students[oldName];
+  save(db);
+
+  refreshStudentSelect();
+  $("studentSelect").value = nn;
+  $("student").value = nn;
+  setStatus("Öğrenci adı güncellendi.");
+  renderTable();
+}
+
+function deleteStudentFromList(){
+  const sel = $("studentSelect");
+  const name = normalizeName(sel.value);
+  if(!name) return alert("Önce listeden öğrenci seçiniz.");
+
+  if(!confirm(`"${name}" öğrencisini silmek istiyor musunuz?\n(Ödev kayıtları da silinir)`)) return;
+
+  const db = load();
+  delete db.students[name];
+  save(db);
+
+  refreshStudentSelect();
+  $("student").value = "";
+  sel.value = "";
+  setStatus("Öğrenci silindi.");
+  renderTable();
+}
+
+/* =========================
+   Kitap Listesi UI
+========================= */
+function refreshBookSelect(){
+  const db = load();
+  const sel = $("book");
+  if(!sel) return;
+
+  const current = sel.value;
+  const books = (db.books||[]).slice().sort((a,b)=>a.localeCompare(b,"tr"));
+
+  sel.innerHTML = `<option value="">Kitap Seçiniz...</option>` +
+    books.map(b=>`<option value="${escapeHtml(b)}">${escapeHtml(b)}</option>`).join("");
+
+  if(books.includes(current)) sel.value = current;
+}
+
+function addBook(){
+  const book = normalizeName(prompt("Eklenecek kitap adı:",""));
+  if(!book) return;
+
+  const db = load();
+  db.books = Array.isArray(db.books)?db.books:[];
+  if(db.books.includes(book)) return alert("Bu kitap zaten listede var.");
+
+  db.books.push(book);
+  save(db);
+
+  refreshBookSelect();
+  $("book").value = book;
+  setStatus("Kitap eklendi.");
+}
+
+function renameBook(){
+  const oldName = normalizeName($("book").value);
+  if(!oldName) return alert("Önce bir kitap seçiniz.");
+
+  const nn = normalizeName(prompt("Yeni kitap adı:", oldName));
+  if(!nn) return;
+  if(nn === oldName) return;
+
+  const db = load();
+  if(db.books.includes(nn)) return alert("Bu isim zaten var.");
+
+  db.books = db.books.map(b => (b===oldName ? nn : b));
+
+  // geçmiş ödev kayıtlarında da güncelle
+  Object.keys(db.students||{}).forEach(s=>{
+    db.students[s].assignments?.forEach(a=>{
+      if(a.book === oldName) a.book = nn;
+    });
+  });
+
+  save(db);
+  refreshBookSelect();
+  $("book").value = nn;
+  setStatus("Kitap adı güncellendi.");
+  renderTable();
+}
+
+function deleteBook(){
+  const book = normalizeName($("book").value);
+  if(!book) return alert("Önce bir kitap seçiniz.");
+  if(!confirm(`"${book}" kitabını listeden silmek istiyor musunuz?`)) return;
+
+  const db = load();
+  db.books = (db.books||[]).filter(b=>b!==book);
+  save(db);
+
+  refreshBookSelect();
+  setStatus("Kitap silindi.");
+}
+
+function resetBooks(){
+  if(!confirm("Varsayılan kitap listesi yüklensin mi?\n(Mevcut eklediğiniz kitaplar sıfırlanır)")) return;
+  const db = load();
+  db.books = DEFAULT_BOOKS.slice();
+  save(db);
+  refreshBookSelect();
+  setStatus("Varsayılan kitaplar yüklendi.");
+}
+
+/* =========================
+   Ödev Ekle (Tarih Aralığına)
+========================= */
+function addAssignments(){
+  const studentName = normalizeName($("student").value);
+  if(!studentName) return alert("Öğrenci adı soyadı giriniz.");
+
+  const book = normalizeName($("book").value);
+  if(!book) return alert("Kitap seçiniz.");
+
+  // kitap listesinde yoksa otomatik ekle (kullanışlı)
+  const db = load();
+  if(!db.books.includes(book)){
+    db.books.push(book);
+  }
+
+  const pStart = $("pStart").value;
+  const pEnd = $("pEnd").value;
+
+  const dates = getSelectedDates();
+  if(dates.length === 0) return alert("Tarih seçiniz.");
+
+  const isRange = dates.length > 1;
+  if(isRange){
+    const ok = confirm(`Bu ödevi seçtiğiniz tarih aralığındaki ${dates.length} güne birden ekleyeyim mi?\n(${trDate(dates[0])} - ${trDate(dates[dates.length-1])})`);
+    if(!ok) return;
+  }
+
+  ensureStudent(db, studentName);
+
+  // aynı gün + aynı kitap varsa: sayfayı güncelle (çift kaydı azaltır)
+  dates.forEach(dISO=>{
+    const list = db.students[studentName].assignments;
+    const existing = list.find(a => a.date === dISO && a.book === book);
+    if(existing){
+      existing.pStart = pStart;
+      existing.pEnd = pEnd;
+      existing.updatedAt = new Date().toISOString();
+    }else{
+      list.push({
+        date: dISO,
+        book,
+        pStart,
+        pEnd,
+        createdAt: new Date().toISOString()
+      });
+    }
+  });
+
+  save(db);
+
+  // öğrenci & listeler
+  refreshStudentSelect();
+  $("studentSelect").value = studentName;
+  refreshBookSelect();
+
+  setStatus(`Ödev kaydedildi: ${studentName} • ${book} • ${pageText(pStart,pEnd)} • ${isRange ? (trDate(dates[0])+"-"+trDate(dates[dates.length-1])) : trDate(dates[0])}`);
+  renderTable();
+}
+
+/* =========================
+   WhatsApp Mesajları
+========================= */
+function buildDailyMessage(studentName, dateISO){
+  const db = load();
+  const rec = db.students?.[studentName];
   if(!rec) return "";
 
-  const list = rec.assignments.filter(a => a.date === dateISO);
+  const list = (rec.assignments||[]).filter(a => a.date === dateISO);
   if(list.length === 0) return "";
 
-  const trDate = dateISO.split("-").reverse().join(".");
-
-  const pageText = (a) => {
-    const s = `${a.pStart || ""}${a.pEnd ? "-" + a.pEnd : ""}`.trim();
-    return s || "-";
-  };
-
+  // kitaplara grupla
   const grouped = {};
-  list.forEach(a => {
+  list.forEach(a=>{
     grouped[a.book] = grouped[a.book] || [];
-    grouped[a.book].push(pageText(a));
+    grouped[a.book].push(pageText(a.pStart,a.pEnd));
   });
 
   const lines = [];
-
-  // Başlık
   lines.push("*tolgaaydos.com* | *Ödev Takip Sistemi*");
   lines.push("");
-
-  // Bilgiler
-  lines.push(`📅 *Tarih:* ${trDate}`);
+  lines.push(`📅 *Tarih:* ${trDate(dateISO)}`);
   lines.push(`🎓 *Öğrenci:* ${studentName}`);
   lines.push("");
-
-  // Ödevler
   lines.push("📚 *ÖDEVLER*");
 
-  let i = 1;
-  Object.keys(grouped).forEach(book => {
+  let i=1;
+  Object.keys(grouped).forEach(book=>{
     lines.push(`${i}) *${book}*`);
     lines.push(`   ▸ Sayfa: ${grouped[book].join(", ")}`);
     i++;
@@ -314,251 +679,65 @@
   return lines.join("\n");
 }
 
-  async function copyText(text){
-    try{
-      await navigator.clipboard.writeText(text);
-      setStatus("Metin kopyalandı.");
-    }catch{
-      const ta=document.createElement("textarea");
-      ta.value=text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      setStatus("Metin kopyalandı.");
-    }
-  }
+function sendWhatsAppDaily(){
+  const studentName = normalizeName($("student").value);
+  if(!studentName) return alert("Öğrenci adı soyadı giriniz.");
 
-  // init
-  $("date").value = todayISO();
-  render();
+  const dateISO = $("date").value;
+  if(!dateISO) return alert("Günlük gönderim tarihi seçiniz.");
 
-  $("todayBtn").addEventListener("click", () => {
-    $("date").value = todayISO();
-    setStatus("Tarih: Bugün seçildi.");
-  });
+  const msg = buildDailyMessage(studentName, dateISO);
+  if(!msg) return alert("Bu öğrenci için bu tarihte kayıtlı ödev yok.");
 
-  $("addBtn").addEventListener("click", () => {
-    try{
-      const student = normName($("student").value);
-      const date = $("date").value;
-      const book = $("book").value;
-      const pStart = $("pStart").value ? Number($("pStart").value) : "";
-      const pEnd = $("pEnd").value ? Number($("pEnd").value) : "";
-
-      const err = validate(student, date, book, pStart, pEnd);
-      if(err){ alert(err); setStatus(err); return; }
-
-      const db = load();
-      ensureStudent(db, student);
-
-      db.students[student].assignments.push({ date, book, pStart, pEnd, createdAt: Date.now() });
-      save(db);
-
-      $("book").value=""; $("pStart").value=""; $("pEnd").value="";
-      setStatus("Kayıt eklendi.");
-      render();
-    }catch(e){
-      alert("Kayıt sırasında hata oluştu.");
-      setStatus("Hata: " + (e && e.message ? e.message : e));
-    }
-  });
-
-  $("waBtn").addEventListener("click", () => {
-    try{
-      const student = normName($("student").value);
-      const date = $("date").value;
-
-      if(!student){ alert("Öğrenci adını yazmalısın."); setStatus("Öğrenci adı eksik."); return; }
-      if(!date){ alert("Tarih seçmelisin."); setStatus("Tarih eksik."); return; }
-
-      const text = buildWhatsAppMessage(student, date);
-      if(!text){ alert("Bu öğrenci için seçili tarihte ödev yok."); setStatus("Gönderilecek ödev yok."); return; }
-
-      // ✅ iOS’ta en stabil yöntem: yeni pencere değil, aynı sekmede yönlendirme
-      const url = "https://wa.me/?text=" + encodeURIComponent(text);
-      setStatus("WhatsApp açılıyor...");
-      location.href = url;
-    }catch(e){
-      alert("WhatsApp açılırken hata oluştu.");
-      setStatus("Hata: " + (e && e.message ? e.message : e));
-    }
-  });
-
-  $("copyBtn").addEventListener("click", async () => {
-    const student = normName($("student").value);
-    const date = $("date").value;
-    if(!student){ alert("Öğrenci adını yazmalısın."); setStatus("Öğrenci adı eksik."); return; }
-    if(!date){ alert("Tarih seçmelisin."); setStatus("Tarih eksik."); return; }
-    const text = buildWhatsAppMessage(student, date);
-    if(!text){ alert("Bu öğrenci için seçili tarihte ödev yok."); setStatus("Kopyalanacak metin yok."); return; }
-    await copyText(text);
-  });
-
-  $("tbody").addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-student]");
-    if(!btn) return;
-
-    const student = btn.getAttribute("data-student");
-    const idx = Number(btn.getAttribute("data-idx"));
-
-    const db = load();
-    const rec = db.students[student];
-    if(!rec) return;
-
-    rec.assignments.splice(idx, 1);
-    if(rec.assignments.length === 0) delete db.students[student];
-
-    save(db);
-    setStatus("Kayıt silindi.");
-    render();
-  });
-
-  $("wipeBtn").addEventListener("click", () => {
-    if(!confirm("Tüm kayıtlar silinsin mi?")) return;
-    STORE.removeItem(KEY);
-    setStatus("Tüm veriler silindi.");
-    render();
-  });
-  document.getElementById("weeklyBtn").addEventListener("click", sendWeeklySummary);
-
-function sendWeeklySummary(){
-  const studentName = document.getElementById("studentName").value.trim();
-  if(!studentName){
-    alert("Öğrenci adı giriniz");
-    return;
-  }
-
-  const db = load();
-  const rec = db.students[studentName];
-  if(!rec || rec.assignments.length === 0){
-    alert("Bu öğrenci için kayıt bulunamadı");
-    return;
-  }
-
-  const today = new Date();
-  const weekAgo = new Date();
-  weekAgo.setDate(today.getDate() - 7);
-
-  const list = rec.assignments.filter(a => {
-    const d = new Date(a.date);
-    return d >= weekAgo && d <= today;
-  });
-
-  if(list.length === 0){
-    alert("Son 7 gün içinde ödev yok");
-    return;
-  }
-
-  // Grupla
-  const grouped = {};
-  list.forEach(a => {
-    grouped[a.book] = grouped[a.book] || [];
-    const pages = `${a.pStart || ""}${a.pEnd ? "-" + a.pEnd : ""}`;
-    grouped[a.book].push(pages);
-  });
-
-  const lines = [];
-  lines.push("──────────────────");
-  lines.push("*tolgaaydos.com*  |  *Haftalık Ödev Özeti*");
-  lines.push("──────────────────");
-  lines.push(`🎓 *Öğrenci:* ${studentName}`);
-  lines.push(`📅 *Son 7 Gün*`);
-  lines.push("");
-  lines.push("📚 *ÖDEVLER*");
-
-  let i = 1;
-  Object.keys(grouped).forEach(book => {
-    lines.push(`${i}) *${book}*`);
-    lines.push(`   ▸ Sayfa: ${grouped[book].join(", ")}`);
-    i++;
-  });
-
-  lines.push("");
-  lines.push("_İyi çalışmalar._");
-  lines.push("*Tolga Hoca*");
-  lines.push("──────────────────");
-
-  const msg = encodeURIComponent(lines.join("\n"));
-  window.open(`https://wa.me/?text=${msg}`, "_blank");
+  const url = "https://wa.me/?text=" + encodeURIComponent(msg);
+  // iOS uyumu: aynı sekmede aç
+  location.href = url;
 }
-  // Haftalık özet (son 7 gün) - iOS uyumlu
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("weeklyBtn");
-  if (btn) btn.addEventListener("click", sendWeeklySummary);
-});
 
-function sendWeeklySummary(){
-  const studentEl = document.getElementById("student"); // ✅ senin input id’n bu
-  const dateEl = document.getElementById("date");       // ✅ tarih inputu
-
-  const studentName = (studentEl?.value || "").trim();
-  if(!studentName){
-    alert("Öğrenci adını yazmalısın.");
-    return;
-  }
-
+function buildRangeSummary(studentName, startISO, endISO){
   const db = load();
   const rec = db.students?.[studentName];
-  if(!rec || !Array.isArray(rec.assignments) || rec.assignments.length === 0){
-    alert("Bu öğrenci için kayıt bulunamadı.");
-    return;
-  }
+  if(!rec) return "";
 
-  // Bugünden geriye 7 gün (bugün dahil)
-  const end = new Date();
-  end.setHours(23,59,59,999);
-  const start = new Date();
-  start.setDate(start.getDate() - 6);
-  start.setHours(0,0,0,0);
+  const start = new Date(startISO); start.setHours(0,0,0,0);
+  const end = new Date(endISO); end.setHours(23,59,59,999);
 
-  // Son 7 günün ödevleri
-  const list = rec.assignments.filter(a => {
+  const list = (rec.assignments||[]).filter(a=>{
     if(!a.date) return false;
     const d = new Date(a.date);
     return d >= start && d <= end;
   });
 
-  if(list.length === 0){
-    alert("Son 7 gün içinde ödev yok.");
-    return;
-  }
+  if(list.length === 0) return "";
 
-  // Tarihe göre grupla, sonra kitaplara göre grupla
+  // tarihe göre grupla
   const byDate = {};
-  list.forEach(a => {
+  list.forEach(a=>{
     byDate[a.date] = byDate[a.date] || [];
     byDate[a.date].push(a);
   });
 
-  const fmtTR = (iso) => iso.split("-").reverse().join(".");
-
-  const pageText = (a) => {
-    const s = `${a.pStart || ""}${a.pEnd ? "-" + a.pEnd : ""}`.trim();
-    return s || "-";
-  };
-
-  const dates = Object.keys(byDate).sort(); // eski -> yeni
+  const dates = Object.keys(byDate).sort();
 
   const lines = [];
-  lines.push("*tolgaaydos.com* | *Haftalık Ödev Özeti*");
+  lines.push("*tolgaaydos.com* | *Ödev Özeti*");
   lines.push(`🎓 *Öğrenci:* ${studentName}`);
-  lines.push(`📅 *Aralık:* ${fmtTR(dates[0])} - ${fmtTR(dates[dates.length-1])}`);
+  lines.push(`📅 *Aralık:* ${trDate(dates[0])} - ${trDate(dates[dates.length-1])}`);
   lines.push("");
   lines.push("📚 *ÖDEVLER*");
 
-  dates.forEach(dISO => {
+  dates.forEach(dISO=>{
     lines.push("");
-    lines.push(`🗓️ *${fmtTR(dISO)}*`);
+    lines.push(`🗓️ *${trDate(dISO)}*`);
 
     const grouped = {};
-    byDate[dISO].forEach(a => {
+    byDate[dISO].forEach(a=>{
       grouped[a.book] = grouped[a.book] || [];
-      grouped[a.book].push(pageText(a));
+      grouped[a.book].push(pageText(a.pStart,a.pEnd));
     });
 
-    let i = 1;
-    Object.keys(grouped).forEach(book => {
+    let i=1;
+    Object.keys(grouped).forEach(book=>{
       lines.push(`${i}) *${book}*`);
       lines.push(`   ▸ Sayfa: ${grouped[book].join(", ")}`);
       i++;
@@ -569,313 +748,250 @@ function sendWeeklySummary(){
   lines.push("_İyi çalışmalar._");
   lines.push("*Tolga Hoca*");
 
-  const url = "https://wa.me/?text=" + encodeURIComponent(lines.join("\n"));
-
-  // ✅ iPhone’da en stabil: aynı sekmede yönlendir
-  location.href = url;
-}
-// === Öğrenci listesi (kalıcı) ===
-document.addEventListener("DOMContentLoaded", () => {
-  refreshStudentSelect();
-
-  const sel = document.getElementById("studentSelect");
-  const studentEl = document.getElementById("student");
-
-  if (sel && studentEl) {
-    sel.addEventListener("change", () => {
-      studentEl.value = sel.value || "";
-      // buton akıllandırma vb. varsa tetikleyelim
-      if (typeof updateWeeklyBtnState === "function") updateWeeklyBtnState();
-    });
-  }
-
-  const addBtn = document.getElementById("addStudentBtn");
-  if (addBtn) addBtn.addEventListener("click", addStudentToList);
-
-  const delBtn = document.getElementById("deleteStudentBtn");
-  if (delBtn) delBtn.addEventListener("click", deleteStudentFromList);
-
-  const renBtn = document.getElementById("renameStudentBtn");
-  if (renBtn) renBtn.addEventListener("click", renameStudentInList);
-});
-
-function refreshStudentSelect() {
-  const sel = document.getElementById("studentSelect");
-  if (!sel) return;
-
-  const db = load();
-  const names = Object.keys(db.students || {}).sort((a,b)=>a.localeCompare(b, "tr"));
-
-  const current = sel.value;
-  sel.innerHTML = `<option value="">Öğrenci seçiniz...</option>` +
-    names.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join("");
-
-  // seçimi koru
-  if (names.includes(current)) sel.value = current;
+  return lines.join("\n");
 }
 
-function addStudentToList() {
-  const studentEl = document.getElementById("student");
-  const name = (studentEl?.value || "").trim();
-  if (!name) return alert("Öğrenci adı soyadı yazınız.");
+function sendWeeklySummary(){
+  const studentName = normalizeName($("student").value);
+  if(!studentName) return alert("Öğrenci adı soyadı giriniz.");
 
-  const db = load();
-  db.students = db.students || {};
+  // Eğer kullanıcı aralık seçtiyse onu kullan, yoksa son 7 gün
+  let s = $("startDate").value;
+  let e = $("endDate").value;
 
-  if (!db.students[name]) {
-    db.students[name] = { assignments: [] };
-    save(db);
-  }
-
-  refreshStudentSelect();
-  const sel = document.getElementById("studentSelect");
-  if (sel) sel.value = name;
-
-  alert("Öğrenci listeye eklendi.");
-}
-
-function deleteStudentFromList() {
-  const sel = document.getElementById("studentSelect");
-  const name = (sel?.value || "").trim();
-  if (!name) return alert("Önce listeden bir öğrenci seçiniz.");
-
-  if (!confirm(`"${name}" öğrencisini listeden silmek istiyor musunuz?\n(Ödev kayıtları da silinir)`)) return;
-
-  const db = load();
-  if (db.students && db.students[name]) {
-    delete db.students[name];
-    save(db);
-  }
-
-  refreshStudentSelect();
-  const studentEl = document.getElementById("student");
-  if (studentEl) studentEl.value = "";
-  alert("Öğrenci silindi.");
-}
-
-function renameStudentInList() {
-  const sel = document.getElementById("studentSelect");
-  const oldName = (sel?.value || "").trim();
-  if (!oldName) return alert("Önce listeden bir öğrenci seçiniz.");
-
-  const newName = prompt("Yeni öğrenci adını giriniz:", oldName);
-  if (!newName) return;
-  const nn = newName.trim();
-  if (!nn) return;
-
-  const db = load();
-  db.students = db.students || {};
-
-  if (!db.students[oldName]) return alert("Kayıt bulunamadı.");
-
-  if (oldName === nn) return;
-
-  if (db.students[nn]) {
-    return alert("Bu isim zaten var. Lütfen farklı bir isim giriniz.");
-  }
-
-  // kayıtları taşı
-  db.students[nn] = db.students[oldName];
-  delete db.students[oldName];
-  save(db);
-
-  refreshStudentSelect();
-  sel.value = nn;
-
-  const studentEl = document.getElementById("student");
-  if (studentEl) studentEl.value = nn;
-
-  alert("Öğrenci adı güncellendi.");
-}
-
-// Basit HTML escape (select içine güvenli yazmak için)
-function escapeHtml(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-// === Kitap listesi (kalıcı) ===
-document.addEventListener("DOMContentLoaded", () => {
-  ensureBookList();
-  refreshBookSelect();
-
-  const addB = document.getElementById("addBookBtn");
-  if (addB) addB.addEventListener("click", addBook);
-
-  const renB = document.getElementById("renameBookBtn");
-  if (renB) renB.addEventListener("click", renameBook);
-
-  const delB = document.getElementById("deleteBookBtn");
-  if (delB) delB.addEventListener("click", deleteBook);
-});
-
-// İlk kez açılışta kitap listesi yoksa varsayılanı kur
-function ensureBookList(){
-  const db = load();
-  db.books = db.books || [];
-  if(db.books.length === 0){
-    // İstersen burayı tamamen boş da bırakabiliriz
-    db.books = [
-      "TYT Matematik Soru Bankası",
-      "AYT Fizik Konu Anlatımı",
-      "Geometri Yaprak Test",
-      "Paragraf Soru Bankası",
-      "Kimya Denemeleri"
-    ];
-    save(db);
-  }
-}
-
-// Mevcut kitap select’ini db.books ile doldur
-function refreshBookSelect(){
-  const sel = document.getElementById("book");
-  if(!sel) return;
-
-  const db = load();
-  db.books = db.books || [];
-
-  const current = sel.value;
-
-  // İlk seçenek aynı kalsın
-  sel.innerHTML = `<option value="">Kitap Seçiniz...</option>` +
-    db.books
-      .slice()
-      .sort((a,b)=>a.localeCompare(b, "tr"))
-      .map(b => `<option value="${escapeHtml(b)}">${escapeHtml(b)}</option>`)
-      .join("");
-
-  if(db.books.includes(current)) sel.value = current;
-}
-
-function addBook(){
-  const sel = document.getElementById("book");
-  const current = (sel?.value || "").trim();
-
-  const name = prompt("Eklenecek kitap adı:", current);
-  if(!name) return;
-  const bookName = name.trim();
-  if(!bookName) return;
-
-  const db = load();
-  db.books = db.books || [];
-
-  if(db.books.includes(bookName)){
-    alert("Bu kitap zaten listede var.");
+  if(s && e && s <= e && !(s===e)){
+    const msg = buildRangeSummary(studentName, s, e);
+    if(!msg) return alert("Seçtiğiniz aralıkta kayıtlı ödev yok.");
+    location.href = "https://wa.me/?text=" + encodeURIComponent(msg);
     return;
   }
 
-  db.books.push(bookName);
-  save(db);
+  // son 7 gün (bugün dahil)
+  const end = new Date();
+  end.setHours(23,59,59,999);
+  const start = new Date();
+  start.setDate(start.getDate()-6);
+  start.setHours(0,0,0,0);
 
-  refreshBookSelect();
-  if(sel) sel.value = bookName;
+  const sISO = start.toISOString().slice(0,10);
+  const eISO = end.toISOString().slice(0,10);
 
-  alert("Kitap listeye eklendi.");
+  const msg = buildRangeSummary(studentName, sISO, eISO);
+  if(!msg) return alert("Son 7 gün içinde kayıtlı ödev yok.");
+
+  location.href = "https://wa.me/?text=" + encodeURIComponent(msg);
 }
 
-function deleteBook(){
-  const sel = document.getElementById("book");
-  const bookName = (sel?.value || "").trim();
-  if(!bookName) return alert("Önce bir kitap seçiniz.");
+/* =========================
+   Kopyala / Bugün
+========================= */
+async function copyCurrentMessage(){
+  const studentName = normalizeName($("student").value);
+  if(!studentName) return alert("Öğrenci adı soyadı giriniz.");
 
-  if(!confirm(`"${bookName}" kitabını listeden silmek istiyor musunuz?`)) return;
+  const dateISO = $("date").value;
+  if(!dateISO) return alert("Tarih seçiniz.");
 
-  const db = load();
-  db.books = (db.books || []).filter(b => b !== bookName);
-  save(db);
+  const msg = buildDailyMessage(studentName, dateISO);
+  if(!msg) return alert("Bu tarihte kayıtlı ödev yok.");
 
-  refreshBookSelect();
-  alert("Kitap silindi.");
-}
-
-function renameBook(){
-  const sel = document.getElementById("book");
-  const oldName = (sel?.value || "").trim();
-  if(!oldName) return alert("Önce bir kitap seçiniz.");
-
-  const newName = prompt("Yeni kitap adı:", oldName);
-  if(!newName) return;
-  const nn = newName.trim();
-  if(!nn) return;
-
-  const db = load();
-  db.books = db.books || [];
-
-  if(oldName === nn) return;
-
-  if(db.books.includes(nn)){
-    alert("Bu isim zaten var.");
-    return;
+  try{
+    await navigator.clipboard.writeText(msg);
+    setStatus("Metin panoya kopyalandı ✅");
+  }catch(e){
+    // iOS bazı durumlarda engeller → fallback
+    prompt("Kopyalamak için basılı tutup kopyalayın:", msg);
   }
+}
 
-  // kitap listesini güncelle
-  db.books = db.books.map(b => (b === oldName ? nn : b));
+function setToday(){
+  const today = new Date().toISOString().slice(0,10);
+  $("date").value = today;
+  $("startDate").value = today;
+  $("endDate").value = today;
+  updateSingleDateTag();
+  setStatus("Bugün seçildi.");
+}
 
-  // varsa geçmiş ödevlerdeki book alanını da güncelle (çok faydalı!)
-  Object.keys(db.students || {}).forEach(s => {
-    const rec = db.students[s];
-    if(!rec?.assignments) return;
-    rec.assignments.forEach(a => {
-      if(a.book === oldName) a.book = nn;
+/* =========================
+   Tablo
+========================= */
+function renderTable(){
+  const db = load();
+  const wrap = $("tableWrap");
+  if(!wrap) return;
+
+  const rows = [];
+
+  Object.keys(db.students||{}).sort((a,b)=>a.localeCompare(b,"tr")).forEach(student=>{
+    const list = db.students[student].assignments || [];
+    list.forEach(a=>{
+      rows.push({
+        student,
+        date: a.date || "",
+        book: a.book || "",
+        pages: pageText(a.pStart,a.pEnd)
+      });
     });
   });
 
-  save(db);
+  rows.sort((r1,r2)=>{
+    if(r1.student !== r2.student) return r1.student.localeCompare(r2.student,"tr");
+    if(r1.date !== r2.date) return (r1.date||"").localeCompare(r2.date||"");
+    return (r1.book||"").localeCompare(r2.book||"","tr");
+  });
 
+  if(rows.length === 0){
+    wrap.innerHTML = `<div class="muted small">Henüz kayıt yok.</div>`;
+    return;
+  }
+
+  const html = `
+    <table>
+      <thead>
+        <tr>
+          <th>Öğrenci</th>
+          <th>Tarih</th>
+          <th>Kitap</th>
+          <th>Sayfa</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows.map(r=>`
+          <tr>
+            <td><b>${escapeHtml(r.student)}</b></td>
+            <td>${escapeHtml(trDate(r.date))}</td>
+            <td>${escapeHtml(r.book)}</td>
+            <td>${escapeHtml(r.pages)}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+  wrap.innerHTML = html;
+}
+
+/* =========================
+   Yedek / Geri Yükle
+========================= */
+function exportJSON(){
+  const db = load();
+  const blob = new Blob([JSON.stringify(db,null,2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "odev-takip-yedek.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  setStatus("Yedek indirildi.");
+}
+
+function importJSON(){
+  $("importFile").click();
+}
+
+function handleImportFile(file){
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const db = JSON.parse(reader.result);
+      if(!db || typeof db !== "object") throw new Error("Geçersiz");
+      db.students = db.students || {};
+      db.books = Array.isArray(db.books) ? db.books : DEFAULT_BOOKS.slice();
+      save(db);
+
+      refreshStudentSelect();
+      refreshBookSelect();
+      renderTable();
+      setStatus("Yedek yüklendi ✅");
+    }catch(e){
+      alert("Yedek dosyası okunamadı.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+function wipeAll(){
+  if(!confirm("Tüm kayıtları SIFIRLAMAK istiyor musunuz?\n(Geri alınamaz)")) return;
+  localStorage.removeItem(STORAGE_KEY);
+  load(); // yeniden kur
+  refreshStudentSelect();
   refreshBookSelect();
-  if(sel) sel.value = nn;
-
-  alert("Kitap adı güncellendi.");
+  renderTable();
+  setStatus("Tüm kayıtlar sıfırlandı.");
 }
+
+/* =========================
+   Başlat
+========================= */
 document.addEventListener("DOMContentLoaded", () => {
+  // varsayılan tarihleri doldur
   const today = new Date().toISOString().slice(0,10);
-  const s = document.getElementById("startDate");
-  const e = document.getElementById("endDate");
-  if(s && !s.value) s.value = today;
-  if(e && !e.value) e.value = today;
+  if(!$("date").value) $("date").value = today;
+  if(!$("startDate").value) $("startDate").value = today;
+  if(!$("endDate").value) $("endDate").value = today;
+
+  updateSingleDateTag();
+
+  // öğrenci seçince input doldur
+  $("studentSelect").addEventListener("change", ()=>{
+    $("student").value = $("studentSelect").value || "";
+  });
+
+  // input yazınca select seçimini kaldır (özgür bırak)
+  $("student").addEventListener("input", ()=>{
+    $("studentSelect").value = "";
+  });
+
+  // aralık değişince single-date tag güncelle ve (istersen) date'i start'a çek
+  $("startDate").addEventListener("change", ()=>{
+    // günlük alanı start'a yaklaşsın (kullanışlı)
+    if($("startDate").value) $("date").value = $("startDate").value;
+    updateSingleDateTag();
+  });
+  $("endDate").addEventListener("change", ()=>{});
+
+  $("date").addEventListener("change", updateSingleDateTag);
+
+  // butonlar
+  $("addBtn").addEventListener("click", addAssignments);
+  $("waBtn").addEventListener("click", sendWhatsAppDaily);
+  $("weeklyBtn").addEventListener("click", sendWeeklySummary);
+  $("copyBtn").addEventListener("click", copyCurrentMessage);
+  $("todayBtn").addEventListener("click", setToday);
+
+  $("addStudentBtn").addEventListener("click", addStudentToList);
+  $("renameStudentBtn").addEventListener("click", renameStudentInList);
+  $("deleteStudentBtn").addEventListener("click", deleteStudentFromList);
+
+  $("addBookBtn").addEventListener("click", addBook);
+  $("renameBookBtn").addEventListener("click", renameBook);
+  $("deleteBookBtn").addEventListener("click", deleteBook);
+  $("resetBooksBtn").addEventListener("click", resetBooks);
+
+  $("exportBtn").addEventListener("click", exportJSON);
+  $("importBtn").addEventListener("click", importJSON);
+  $("wipeBtn").addEventListener("click", wipeAll);
+  $("rebuildBtn").addEventListener("click", ()=>{
+    refreshStudentSelect();
+    refreshBookSelect();
+    renderTable();
+    setStatus("Liste yenilendi.");
+  });
+
+  $("importFile").addEventListener("change", (e)=>{
+    const f = e.target.files?.[0];
+    if(f) handleImportFile(f);
+    e.target.value = "";
+  });
+
+  // ilk yükleme
+  refreshStudentSelect();
+  refreshBookSelect();
+  renderTable();
 });
-function getDateRange(){
-  const s = document.getElementById("startDate")?.value;
-  const e = document.getElementById("endDate")?.value;
-
-  // aralık yoksa eski tek tarih alanına düş
-  if(!s || !e) {
-    const single = document.getElementById("date")?.value;
-    return single ? [single] : [];
-  }
-
-  if(s > e){
-    alert("Başlangıç tarihi, bitişten büyük olamaz.");
-    return [];
-  }
-
-  // s..e arası tüm günler
-  const dates = [];
-  let cur = new Date(s);
-  const end = new Date(e);
-  cur.setHours(12,0,0,0);
-  end.setHours(12,0,0,0);
-
-  while(cur <= end){
-    dates.push(cur.toISOString().slice(0,10));
-    cur.setDate(cur.getDate() + 1);
-  }
-  return dates;
-}
-
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
