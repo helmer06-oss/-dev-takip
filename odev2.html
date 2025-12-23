@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>tolgaaydos.com - Ödev Takip Sistemi</title>
 
-  <!-- Favicon (aynı klasörde logo.png varsa otomatik) -->
   <link rel="icon" type="image/png" href="logo.png" />
 
   <style>
@@ -17,10 +16,8 @@
       --line:#e5e7eb;
       --blue:#1677ff;
       --green:#22c55e;
-      --orange:#f59e0b;
       --shadow: 0 14px 34px rgba(2,6,23,.10);
       --radius: 18px;
-      --radius2: 14px;
       --ring: 0 0 0 3px rgba(22,119,255,.15);
       font-synthesis-weight:none;
     }
@@ -31,11 +28,7 @@
       color:var(--text);
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
     }
-    .wrap{
-      max-width:780px;
-      margin:0 auto;
-      padding:20px 14px 44px;
-    }
+    .wrap{max-width:780px;margin:0 auto;padding:20px 14px 44px;}
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -44,43 +37,22 @@
       overflow:hidden;
     }
     .brand{
-      display:flex;
-      align-items:center;
-      gap:14px;
+      display:flex;align-items:center;gap:14px;
       padding:14px 16px;
       border-bottom:1px solid var(--line);
       background:linear-gradient(180deg,#ffffff,#fbfbfd);
     }
     .brand img{
-      width:56px;height:56px; object-fit:contain;
-      border-radius:14px;
-      border:1px solid var(--line);
-      background:#fff;
-      flex:0 0 auto;
+      width:56px;height:56px;object-fit:contain;
+      border-radius:14px;border:1px solid var(--line);
+      background:#fff;flex:0 0 auto;
     }
-    .brand .t1{
-      font-weight:900;
-      letter-spacing:.2px;
-      font-size:24px;
-      line-height:1.05;
-    }
-    .brand .t2{
-      margin-top:2px;
-      font-weight:800;
-      font-size:20px;
-      color:#111827;
-      line-height:1.1;
-    }
-    .content{ padding:18px 16px 20px; }
+    .brand .t1{font-weight:900;letter-spacing:.2px;font-size:24px;line-height:1.05;}
+    .brand .t2{margin-top:2px;font-weight:800;font-size:20px;color:#111827;line-height:1.1;}
+    .content{padding:18px 16px 20px;}
 
-    label{
-      display:block;
-      font-size:13px;
-      font-weight:800;
-      color:#111827;
-      margin:12px 0 6px;
-    }
-    input, select, textarea{
+    label{display:block;font-size:13px;font-weight:800;color:#111827;margin:12px 0 6px;}
+    input, select{
       width:100%;
       padding:12px 12px;
       border:1px solid var(--line);
@@ -89,123 +61,40 @@
       outline:none;
       background:#fff;
     }
-    input:focus, select:focus, textarea:focus{ box-shadow:var(--ring); border-color:#bcd7ff; }
+    input:focus, select:focus{box-shadow:var(--ring);border-color:#bcd7ff;}
 
-    .row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width:640px){
-      .row{ grid-template-columns:1fr; }
-    }
-
-    .row3{
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width:860px){
-      .row3{ grid-template-columns:1fr; }
-    }
-
-    .btnRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    @media (max-width:640px){.row{grid-template-columns:1fr;}}
+    .btnRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
     .btn{
-      border:none;
-      border-radius:14px;
-      padding:12px 14px;
-      font-weight:900;
-      font-size:15px;
-      cursor:pointer;
-      width:100%;
+      border:none;border-radius:14px;padding:12px 14px;
+      font-weight:900;font-size:15px;cursor:pointer;width:100%;
       user-select:none;
     }
-    .btn.blue{ background:var(--blue); color:#fff; }
-    .btn.green{ background:var(--green); color:#fff; }
-    .btn.ghost{
-      background:#f1f5f9;
-      color:#111827;
-      border:1px solid var(--line);
-    }
-    .btn.secondary{
-      background:#eef2ff;
-      color:#111827;
-      border:1px solid #dbeafe;
-    }
-    .btn.danger{
-      background:#fee2e2;
-      color:#991b1b;
-      border:1px solid #fecaca;
-    }
-    .btn:disabled{
-      opacity:.45;
-      cursor:not-allowed;
-    }
+    .btn.blue{background:var(--blue);color:#fff;}
+    .btn.green{background:var(--green);color:#fff;}
+    .btn.ghost{background:#f1f5f9;color:#111827;border:1px solid var(--line);}
+    .btn.secondary{background:#eef2ff;color:#111827;border:1px solid #dbeafe;}
+    .btn.danger{background:#fee2e2;color:#991b1b;border:1px solid #fecaca;}
+    .btn:disabled{opacity:.45;cursor:not-allowed;}
 
-    .sep{
-      height:1px; background:var(--line); margin:14px 0;
-    }
-    .muted{ color:var(--muted); }
-    .small{ font-size:12px; }
-    .status{
-      margin-top:10px;
-      font-size:13px;
-      color:var(--muted);
-    }
+    .sep{height:1px;background:var(--line);margin:14px 0;}
+    .muted{color:var(--muted);}
+    .small{font-size:12px;}
+    .status{margin-top:10px;font-size:13px;color:var(--muted);}
 
-    details{
-      margin-top:14px;
-      border-top:1px dashed var(--line);
-      padding-top:12px;
-    }
-    summary{
-      cursor:pointer;
-      font-weight:900;
-      color:#111827;
-      margin-bottom:10px;
-    }
+    details{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;}
+    summary{cursor:pointer;font-weight:900;color:#111827;margin-bottom:10px;}
 
-    table{ width:100%; border-collapse:collapse; }
-    th,td{
-      padding:10px 8px;
-      border-bottom:1px solid var(--line);
-      text-align:left;
-      font-size:13px;
-      vertical-align:top;
-    }
-    th{ color:var(--muted); font-weight:800; font-size:12px; }
+    table{width:100%;border-collapse:collapse;}
+    th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;vertical-align:top;}
+    th{color:var(--muted);font-weight:800;font-size:12px;}
     .tag{
-      display:inline-block;
-      font-size:12px;
-      padding:3px 8px;
-      border-radius:999px;
-      background:#f1f5f9;
-      border:1px solid var(--line);
-      color:#111827;
-      margin-left:6px;
-      font-weight:800;
+      display:inline-block;font-size:12px;padding:3px 8px;border-radius:999px;
+      background:#f1f5f9;border:1px solid var(--line);color:#111827;margin-left:6px;font-weight:800;
     }
-    .right{
-      display:flex;
-      gap:8px;
-      justify-content:flex-end;
-      flex-wrap:wrap;
-    }
-    .tinyRow{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    @media (max-width:640px){
-      .tinyRow{ grid-template-columns:1fr; }
-    }
+    .tinyRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+    @media (max-width:640px){.tinyRow{grid-template-columns:1fr;}}
   </style>
 </head>
 
@@ -223,7 +112,6 @@
 
       <div class="content">
 
-        <!-- Öğrenci seçimi + yönetimi -->
         <label>Öğrenci Listesi:</label>
         <div class="row">
           <select id="studentSelect">
@@ -237,9 +125,8 @@
         </div>
 
         <label>Öğrenci Adı Soyadı:</label>
-        <input id="student" type="text" placeholder="Örn: Ahmet Yılmaz" />
+        <input id="student" type="text" placeholder="Örn: Irmak" />
 
-        <!-- Tarih aralığı -->
         <label>Tarih Aralığı:</label>
         <div class="row">
           <input id="startDate" type="date" />
@@ -249,11 +136,9 @@
           İpucu: Tek gün için başlangıç ve bitişi aynı seç. “Haftalık Özet” seçili aralığı kullanır; aralık seçmezsen son 7 günü gönderir.
         </div>
 
-        <!-- Tek gün göstergesi (WhatsApp günlük için) -->
         <label>Günlük Gönderim Tarihi (tek gün): <span class="tag" id="singleTag">-</span></label>
         <input id="date" type="date" />
 
-        <!-- Kitap seçimi + yönetimi -->
         <label>Kitap Seçimi:</label>
         <select id="book">
           <option value="">Kitap Seçiniz...</option>
@@ -320,18 +205,36 @@
 
 <script>
 /* =========================
-   Kalıcı Veri (localStorage)
+   Sabit Varsayılanlar (senin listelerin)
 ========================= */
-const STORAGE_KEY = "TA_ODEV_DB_V2";
+const STORAGE_KEY = "TA_ODEV_DB_V3";
 
+// ✅ Varsayılan kitaplar (senin verdiğin)
 const DEFAULT_BOOKS = [
-  "TYT Matematik Soru Bankası",
-  "AYT Fizik Konu Anlatımı",
-  "Geometri Yaprak Test",
-  "Paragraf Soru Bankası",
-  "Kimya Denemeleri"
+  "Hız Fen Bilimleri Soru Bankası",
+  "Sinan Kuzucu Fen Bilimleri Soru Bankası",
+  "Ben Korkmam Fen Bilimleri Soru Bankası",
+  "Güçlendiren Fen Bilimleri Soru Bankası"
 ];
 
+// ✅ Varsayılan öğrenciler (senin verdiğin)
+const DEFAULT_STUDENTS = [
+  "Irmak",
+  "Cemre",
+  "Bora",
+  "Buğlem-Tuğsem",
+  "Ayşe Zümra7",
+  "Derin",
+  "Arın",
+  "Derin7",
+  "Mert",
+  "Esma7",
+  "Mehmet"
+];
+
+/* =========================
+   Kalıcı Veri (localStorage)
+========================= */
 function load(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -339,11 +242,16 @@ function load(){
       const db = JSON.parse(raw);
       db.students = db.students || {};
       db.books = Array.isArray(db.books) ? db.books : [];
-      if(db.books.length === 0) db.books = DEFAULT_BOOKS.slice();
       return db;
     }
   }catch(e){}
+
+  // ilk kurulum: varsayılanlar
   const init = { students:{}, books: DEFAULT_BOOKS.slice(), createdAt: new Date().toISOString() };
+  DEFAULT_STUDENTS.forEach(n=>{
+    init.students[n] = { assignments: [] };
+  });
+
   localStorage.setItem(STORAGE_KEY, JSON.stringify(init));
   return init;
 }
@@ -364,9 +272,7 @@ function escapeHtml(str){
 ========================= */
 const $ = (id)=>document.getElementById(id);
 
-function setStatus(msg){
-  $("status").textContent = msg;
-}
+function setStatus(msg){ $("status").textContent = msg; }
 
 function trDate(iso){
   if(!iso) return "-";
@@ -445,7 +351,7 @@ function refreshStudentSelect(){
 
 function addStudentToList(){
   const name = normalizeName($("student").value);
-  if(!name) return alert("Öğrenci adı soyadı yazınız.");
+  if(!name) return alert("Öğrenci adı yazınız.");
 
   const db = load();
   ensureStudent(db, name);
@@ -543,7 +449,6 @@ function renameBook(){
 
   db.books = db.books.map(b => (b===oldName ? nn : b));
 
-  // geçmiş ödev kayıtlarında da güncelle
   Object.keys(db.students||{}).forEach(s=>{
     db.students[s].assignments?.forEach(a=>{
       if(a.book === oldName) a.book = nn;
@@ -584,13 +489,14 @@ function resetBooks(){
 ========================= */
 function addAssignments(){
   const studentName = normalizeName($("student").value);
-  if(!studentName) return alert("Öğrenci adı soyadı giriniz.");
+  if(!studentName) return alert("Öğrenci adı giriniz.");
 
   const book = normalizeName($("book").value);
   if(!book) return alert("Kitap seçiniz.");
 
-  // kitap listesinde yoksa otomatik ekle (kullanışlı)
   const db = load();
+
+  // kitap listesinde yoksa otomatik ekle (manuel ekleme destek)
   if(!db.books.includes(book)){
     db.books.push(book);
   }
@@ -609,7 +515,6 @@ function addAssignments(){
 
   ensureStudent(db, studentName);
 
-  // aynı gün + aynı kitap varsa: sayfayı güncelle (çift kaydı azaltır)
   dates.forEach(dISO=>{
     const list = db.students[studentName].assignments;
     const existing = list.find(a => a.date === dISO && a.book === book);
@@ -618,19 +523,12 @@ function addAssignments(){
       existing.pEnd = pEnd;
       existing.updatedAt = new Date().toISOString();
     }else{
-      list.push({
-        date: dISO,
-        book,
-        pStart,
-        pEnd,
-        createdAt: new Date().toISOString()
-      });
+      list.push({ date: dISO, book, pStart, pEnd, createdAt: new Date().toISOString() });
     }
   });
 
   save(db);
 
-  // öğrenci & listeler
   refreshStudentSelect();
   $("studentSelect").value = studentName;
   refreshBookSelect();
@@ -650,7 +548,6 @@ function buildDailyMessage(studentName, dateISO){
   const list = (rec.assignments||[]).filter(a => a.date === dateISO);
   if(list.length === 0) return "";
 
-  // kitaplara grupla
   const grouped = {};
   list.forEach(a=>{
     grouped[a.book] = grouped[a.book] || [];
@@ -675,13 +572,12 @@ function buildDailyMessage(studentName, dateISO){
   lines.push("");
   lines.push("_İyi çalışmalar._");
   lines.push("*Tolga Hoca*");
-
   return lines.join("\n");
 }
 
 function sendWhatsAppDaily(){
   const studentName = normalizeName($("student").value);
-  if(!studentName) return alert("Öğrenci adı soyadı giriniz.");
+  if(!studentName) return alert("Öğrenci adı giriniz.");
 
   const dateISO = $("date").value;
   if(!dateISO) return alert("Günlük gönderim tarihi seçiniz.");
@@ -689,9 +585,7 @@ function sendWhatsAppDaily(){
   const msg = buildDailyMessage(studentName, dateISO);
   if(!msg) return alert("Bu öğrenci için bu tarihte kayıtlı ödev yok.");
 
-  const url = "https://wa.me/?text=" + encodeURIComponent(msg);
-  // iOS uyumu: aynı sekmede aç
-  location.href = url;
+  location.href = "https://wa.me/?text=" + encodeURIComponent(msg);
 }
 
 function buildRangeSummary(studentName, startISO, endISO){
@@ -707,10 +601,8 @@ function buildRangeSummary(studentName, startISO, endISO){
     const d = new Date(a.date);
     return d >= start && d <= end;
   });
-
   if(list.length === 0) return "";
 
-  // tarihe göre grupla
   const byDate = {};
   list.forEach(a=>{
     byDate[a.date] = byDate[a.date] || [];
@@ -747,18 +639,17 @@ function buildRangeSummary(studentName, startISO, endISO){
   lines.push("");
   lines.push("_İyi çalışmalar._");
   lines.push("*Tolga Hoca*");
-
   return lines.join("\n");
 }
 
 function sendWeeklySummary(){
   const studentName = normalizeName($("student").value);
-  if(!studentName) return alert("Öğrenci adı soyadı giriniz.");
+  if(!studentName) return alert("Öğrenci adı giriniz.");
 
-  // Eğer kullanıcı aralık seçtiyse onu kullan, yoksa son 7 gün
   let s = $("startDate").value;
   let e = $("endDate").value;
 
+  // aralık varsa onu kullan
   if(s && e && s <= e && !(s===e)){
     const msg = buildRangeSummary(studentName, s, e);
     if(!msg) return alert("Seçtiğiniz aralıkta kayıtlı ödev yok.");
@@ -766,17 +657,11 @@ function sendWeeklySummary(){
     return;
   }
 
-  // son 7 gün (bugün dahil)
-  const end = new Date();
-  end.setHours(23,59,59,999);
-  const start = new Date();
-  start.setDate(start.getDate()-6);
-  start.setHours(0,0,0,0);
+  // yoksa son 7 gün
+  const end = new Date(); end.setHours(23,59,59,999);
+  const start = new Date(); start.setDate(start.getDate()-6); start.setHours(0,0,0,0);
 
-  const sISO = start.toISOString().slice(0,10);
-  const eISO = end.toISOString().slice(0,10);
-
-  const msg = buildRangeSummary(studentName, sISO, eISO);
+  const msg = buildRangeSummary(studentName, start.toISOString().slice(0,10), end.toISOString().slice(0,10));
   if(!msg) return alert("Son 7 gün içinde kayıtlı ödev yok.");
 
   location.href = "https://wa.me/?text=" + encodeURIComponent(msg);
@@ -787,7 +672,7 @@ function sendWeeklySummary(){
 ========================= */
 async function copyCurrentMessage(){
   const studentName = normalizeName($("student").value);
-  if(!studentName) return alert("Öğrenci adı soyadı giriniz.");
+  if(!studentName) return alert("Öğrenci adı giriniz.");
 
   const dateISO = $("date").value;
   if(!dateISO) return alert("Tarih seçiniz.");
@@ -799,7 +684,6 @@ async function copyCurrentMessage(){
     await navigator.clipboard.writeText(msg);
     setStatus("Metin panoya kopyalandı ✅");
   }catch(e){
-    // iOS bazı durumlarda engeller → fallback
     prompt("Kopyalamak için basılı tutup kopyalayın:", msg);
   }
 }
@@ -822,16 +706,10 @@ function renderTable(){
   if(!wrap) return;
 
   const rows = [];
-
   Object.keys(db.students||{}).sort((a,b)=>a.localeCompare(b,"tr")).forEach(student=>{
     const list = db.students[student].assignments || [];
     list.forEach(a=>{
-      rows.push({
-        student,
-        date: a.date || "",
-        book: a.book || "",
-        pages: pageText(a.pStart,a.pEnd)
-      });
+      rows.push({ student, date: a.date || "", book: a.book || "", pages: pageText(a.pStart,a.pEnd) });
     });
   });
 
@@ -846,15 +724,10 @@ function renderTable(){
     return;
   }
 
-  const html = `
+  wrap.innerHTML = `
     <table>
       <thead>
-        <tr>
-          <th>Öğrenci</th>
-          <th>Tarih</th>
-          <th>Kitap</th>
-          <th>Sayfa</th>
-        </tr>
+        <tr><th>Öğrenci</th><th>Tarih</th><th>Kitap</th><th>Sayfa</th></tr>
       </thead>
       <tbody>
         ${rows.map(r=>`
@@ -868,7 +741,6 @@ function renderTable(){
       </tbody>
     </table>
   `;
-  wrap.innerHTML = html;
 }
 
 /* =========================
@@ -888,9 +760,7 @@ function exportJSON(){
   setStatus("Yedek indirildi.");
 }
 
-function importJSON(){
-  $("importFile").click();
-}
+function importJSON(){ $("importFile").click(); }
 
 function handleImportFile(file){
   const reader = new FileReader();
@@ -927,7 +797,6 @@ function wipeAll(){
    Başlat
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
-  // varsayılan tarihleri doldur
   const today = new Date().toISOString().slice(0,10);
   if(!$("date").value) $("date").value = today;
   if(!$("startDate").value) $("startDate").value = today;
@@ -935,27 +804,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateSingleDateTag();
 
-  // öğrenci seçince input doldur
   $("studentSelect").addEventListener("change", ()=>{
     $("student").value = $("studentSelect").value || "";
   });
+  $("student").addEventListener("input", ()=>{ $("studentSelect").value = ""; });
 
-  // input yazınca select seçimini kaldır (özgür bırak)
-  $("student").addEventListener("input", ()=>{
-    $("studentSelect").value = "";
-  });
-
-  // aralık değişince single-date tag güncelle ve (istersen) date'i start'a çek
   $("startDate").addEventListener("change", ()=>{
-    // günlük alanı start'a yaklaşsın (kullanışlı)
     if($("startDate").value) $("date").value = $("startDate").value;
     updateSingleDateTag();
   });
-  $("endDate").addEventListener("change", ()=>{});
-
   $("date").addEventListener("change", updateSingleDateTag);
 
-  // butonlar
   $("addBtn").addEventListener("click", addAssignments);
   $("waBtn").addEventListener("click", sendWhatsAppDaily);
   $("weeklyBtn").addEventListener("click", sendWeeklySummary);
